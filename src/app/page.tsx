@@ -15,7 +15,7 @@ export default function Home() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
 
-  // Données de simulation
+  // Données de simulation propres
   const produitsExemples = [
     { id: '1', nom: 'Chaussure Sneaker Sport', boutiqueNom: 'AbJ Tech Urban', categorie: 'Mode', prix: 25000, prixBarre: 35000, reduction: 30 },
     { id: '2', nom: 'Smartphone Pro Max', boutiqueNom: 'Mokolo Gadgets', categorie: 'Électronique', prix: 450000, prixBarre: 520000, reduction: 13 },
@@ -115,7 +115,7 @@ export default function Home() {
   return (
     <div style={{ fontFamily: 'Segoe UI, Roboto, Helvetica, Arial, sans-serif', backgroundColor: '#f8fafc', color: '#1e293b', minHeight: '100vh', margin: 0, position: 'relative', overflowX: 'hidden' }}>
       
-      {/* --- MENU LATÉRAL (DRAWER) --- */}
+      {/* --- MENU LATÉRAL --- */}
       <div style={{
         position: 'fixed', top: 0, left: isMenuOpen ? 0 : '-320px', width: '320px', height: '100vh',
         backgroundColor: '#ffffff', boxShadow: '4px 0 25px rgba(0,0,0,0.15)', zIndex: 200,
@@ -137,21 +137,11 @@ export default function Home() {
           </div>
 
           <div>
-            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b', fontSize: '0.9rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>🛒 Mon Panier & Historique</h4>
+            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b', fontSize: '0.9rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>🛒 Mon Panier</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div style={{ padding: '10px', backgroundColor: '#f1f5f9', borderRadius: '6px', fontSize: '0.85rem' }}>
                 <span style={{ color: '#16a34a', fontWeight: '700' }}>✓ Payé</span> - Commande #0492
               </div>
-              <div style={{ padding: '10px', backgroundColor: '#fef2f2', borderRadius: '6px', fontSize: '0.85rem', borderLeft: '3px solid #dc2626' }}>
-                <span style={{ color: '#dc2626', fontWeight: '700' }}>✕ Annulé</span> - Redirection boutique active
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b', fontSize: '0.9rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>💡 Centre d'aide</h4>
-            <div style={{ padding: '12px', backgroundColor: '#fff7ed', border: '1px dashed #f97316', borderRadius: '8px', fontSize: '0.85rem', color: '#c2410c', lineHeight: '1.4' }}>
-              <strong>Guide Rapide :</strong> Liens uniques marchands et CRM de négociation intelligents actifs.
             </div>
           </div>
 
@@ -183,11 +173,12 @@ export default function Home() {
 
       {isMenuOpen && <div onClick={() => setIsMenuOpen(false)} style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 150 }} />}
 
-      {/* --- SITE PRINCIPAL --- */}
+      {/* --- BARRE DE NOTIFICATION --- */}
       <div style={{ backgroundColor: '#dc2626', color: '#ffffff', textAlign: 'center', padding: '10px 20px', fontSize: '0.85rem', fontWeight: '600' }}>
         📢 Espace Marchand : Créez votre vitrine unique, partagez votre lien et vendez sur la Marketplace !
       </div>
 
+      {/* --- BARRE DE NAVIGATION --- */}
       <nav style={{ 
         display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', 
         padding: '15px 4%', backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0,0,0,0.04)', 
@@ -210,25 +201,21 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO SECTION DE LA MARKETPLACE */}
-      <header style={{ background: 'linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%)', color: '#ffffff', padding: '60px 4%', textAlign: 'center' }}>
+      {/* --- HERO BANNER (REMANIÉ SANS AUCUNE TYPO) --- */}
+      <header style={{ backgroundColor: '#dc2626', color: '#ffffff', padding: '40px 4%', textAlign: 'center' }}>
         <div style={{ maxWidth: '750px', margin: '0 auto' }}>
-          <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: '#ffffff', padding: '5px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '600', textTransform: 'uppercase' }}>
-            Réseau Omnicanal Multi-Boutiques
-          </span>
-          {/* Ligne 215 corrigée : marginBottom valide */}
-          <h1 style={{ fontSize: 'calc(1.8rem + 1.2vw)', fontWeight: '800', marginTop: '15px', marginBottom: '15px', lineHeight: '1.2' }}>
-            Votre Boutique Unique au Cœur du Grand Marché
+          <h1 style={{ fontSize: '2rem', fontWeight: '800', margin: '0 0 10px 0' }}>
+            Mokolo Marketplace
           </h1>
-          <p style={{ fontSize: 'calc(0.95rem + 0.1vw)', color: '#fca5a5', marginBottom: '25px', lineHeight: '1.5' }}>
-            Chaque vendeur possède son lien exclusif pour acquérir ses propres clients, tout en exposant automatiquement ses stocks sur la marketplace commune Mokolo.
+          <p style={{ fontSize: '1rem', color: '#fca5a5', margin: 0 }}>
+            Votre vitrine unique connectée au grand marché. Vendez, négociez et gérez vos stocks en toute simplicité.
           </p>
         </div>
       </header>
 
-      {/* ZONE DE CONTENU PRINCIPALE */}
+      {/* --- FLUX DE PRODUITS EN DOUBLE COLONNE --- */}
       <main style={{ padding: '25px 4%' }}>
-        <h2 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '20px', color: '#1e293b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '20px', color: '#1e293b', textTransform: 'uppercase' }}>
           🔥 Flux du Marché Central
         </h2>
 
@@ -252,38 +239,25 @@ export default function Home() {
                     {product.boutiqueNom}
                   </span>
 
-                  <div style={{ height: '140px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.8rem' }}>
+                  <div style={{ height: '130px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.8rem' }}>
                     [ Image ]
                   </div>
 
                   <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                     <span style={{ fontSize: '0.65rem', color: '#dc2626', textTransform: 'uppercase', fontWeight: '800' }}>{product.categorie}</span>
-                    <h3 style={{ fontSize: '0.9rem', fontWeight: '700', color: '#1e293b', margin: '4px 0 10px 0', lineHeight: '1.3', height: '2.4em', overflow: 'hidden' }}>{product.nom}</h3>
+                    <h3 style={{ fontSize: '0.85rem', fontWeight: '700', color: '#1e293b', margin: '4px 0 10px 0', lineHeight: '1.3', height: '2.4em', overflow: 'hidden' }}>{product.nom}</h3>
                     
-                    <div style={{ marginBottom: '12px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                      <span style={{ fontSize: '1.2rem', fontWeight: '900', color: '#ff002b' }}>
+                    <div style={{ marginBottom: '12px', display: 'flex', flexDirection: 'column' }}>
+                      <span style={{ fontSize: '1.1rem', fontWeight: '900', color: '#ff002b' }}>
                         {product.prix.toLocaleString()} FCFA
                       </span>
                       
                       {product.prixBarre && (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                          <span style={{ 
-                            fontSize: '0.8rem', 
-                            color: 'rgba(220, 38, 38, 0.4)', 
-                            textDecoration: 'line-through',
-                            fontWeight: '600'
-                          }}>
+                          <span style={{ fontSize: '0.75rem', color: 'rgba(220, 38, 38, 0.4)', textDecoration: 'line-through', fontWeight: '600' }}>
                             {product.prixBarre.toLocaleString()} FCFA
                           </span>
-                          <span style={{ 
-                            fontSize: '0.75rem', 
-                            backgroundColor: 'rgba(254, 242, 242, 0.7)', 
-                            color: '#dc2626', 
-                            padding: '1px 5px', 
-                            borderRadius: '4px',
-                            fontWeight: '700',
-                            filter: 'blur(0.2px)'
-                          }}>
+                          <span style={{ fontSize: '0.7rem', backgroundColor: 'rgba(254, 242, 242, 0.7)', color: '#dc2626', padding: '1px 5px', borderRadius: '4px', fontWeight: '700' }}>
                             -{product.reduction}%
                           </span>
                         </div>
@@ -291,10 +265,10 @@ export default function Home() {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: 'auto' }}>
-                      <button onClick={() => alert('Redirection vers le paiement sécurisé')} style={{ width: '100%', padding: '8px', backgroundColor: '#000000', color: '#ffffff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '0.8rem', cursor: 'pointer' }}>
+                      <button onClick={() => alert('Achat')} style={{ width: '100%', padding: '8px', backgroundColor: '#000000', color: '#ffffff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '0.8rem', cursor: 'pointer' }}>
                         Acheter
                       </button>
-                      <button onClick={() => alert('Ouverture du Chat CRM de Négociation Marketing')} style={{ width: '100%', padding: '8px', backgroundColor: '#1a1a1a', color: '#ffffff', border: '1px solid #333', borderRadius: '8px', fontWeight: '600', fontSize: '0.8rem', cursor: 'pointer' }}>
+                      <button onClick={() => alert('Négociation')} style={{ width: '100%', padding: '8px', backgroundColor: '#1a1a1a', color: '#ffffff', border: '1px solid #333', borderRadius: '8px', fontWeight: '600', fontSize: '0.8rem', cursor: 'pointer' }}>
                         Négocier
                       </button>
                     </div>
@@ -304,27 +278,27 @@ export default function Home() {
             </div>
 
             <div style={{ textAlign: 'center', padding: '30px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: '600' }}>
-              🔄 Chargement des produits Mokolo en continu...
+              🔄 Chargement des produits en continu...
             </div>
           </div>
         )}
       </main>
 
-      <footer style={{ backgroundColor: '#1e293b', color: '#94a3b8', padding: '30px 20px', textAlign: 'center', borderTop: '1px solid #cbd5e1', marginTop: '40px' }}>
-        <h3 style={{ color: '#ffffff', fontWeight: '800', margin: '0 0 5px 0', fontSize: '1.1rem' }}>MOKOLO MARKETPLACE</h3>
+      <footer style={{ backgroundColor: '#1e293b', color: '#94a3b8', padding: '30px 20px', textAlign: 'center', marginTop: '40px' }}>
         <p style={{ margin: 0, fontSize: '0.8rem' }}>&copy; 2026 AbJ Tech Solutions. Tous droits réservés.</p>
       </footer>
 
+      {/* LE LAYOUT RESPONSIF STRICT */}
       <style jsx global>{`
         .product-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
+          gap: 10px;
         }
 
         @media (min-width: 640px) {
           .product-grid {
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
           }
         }
@@ -333,7 +307,3 @@ export default function Home() {
     </div>
   );
 }
-fix: correction typo style hero section
-git add src/app/page.tsx
-git commit -m "fix: changement de marginBoton en marginBottom"
-git push origin main
