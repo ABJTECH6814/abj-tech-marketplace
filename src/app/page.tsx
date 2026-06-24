@@ -90,15 +90,16 @@ export default function Home() {
 
         {loading ? (
           <p style={{ textAlign: 'center', color: '#64748b', fontWeight: '500' }}>Synchronisation avec la base de données Mokolo...</p>
-        ) : products.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '50px 20px', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px dashed #cbd5e1' }}>
-            <span style={{ fontSize: '2.5rem' }}>🏪</span>
-            <h3 style={{ color: '#1e293b', margin: '15px 0 5px 0', fontSize: '1.2rem' }}>Le marché Mokolo est prêt !</h3>
-            <p style={{ color: '#64748b', margin: '0 0 20px 0', fontSize: '0.95rem' }}>Aucun vendeur n'a encore publié d'article dans la collection "produits".</p>
-            <p style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Dès qu'un marchand ajoutera un produit sur Firestore, il s'affichera ici instantanément.</p>
-          </div>
+      
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '30px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1) : products.length === 0 ? (
+  <div style={{ textAlign: 'center', padding: '50px 20px', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px dashed #cbd5e1' }}>
+    <span style={{ fontSize: '2.5rem' }}>🏪</span>
+    <h3 style={{ color: '#1e293b', margin: '15px 0 5px 0', fontSize: '1.2rem' }}>Le marché Mokolo est prêt !</h3>
+    <p style={{ color: '#64748b', margin: '0 0 20px 0', fontSize: '0.95rem' }}>Aucun vendeur n'a encore publié d'article dans la collection "produits".</p>
+    <p style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Dès qu'un marchand ajoutera un produit sur Firestore, il s'affichera ici instantanément.</p>
+  </div>
+) : (fr))', gap: '30px' }}>
             {products.map((product) => (
               <div key={product.id} style={{ backgroundColor: '#ffffff', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,0.01)', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ height: '180px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.9rem', position: 'relative' }}>
