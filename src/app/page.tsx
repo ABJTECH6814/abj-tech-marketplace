@@ -10,12 +10,11 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    // 1. Gestion du Splash Screen de 3 secondes
+    // Écran d'accueil immersif pendant exactement 3 secondes
     const timer = setTimeout(() => {
       setShowSplash(false);
     }, 3000);
 
-    // 2. Récupération des produits Mokolo depuis Firebase
     const fetchProducts = async () => {
       try {
         const q = query(collection(db, "produits"), limit(8));
@@ -36,7 +35,7 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // --- ÉCRAN DE DÉMARRAGE (SPLASH SCREEN 3 SECONDES) ---
+  // --- SPLASH SCREEN IMMERSIF STYLE FACEBOOK / SEEDENCE 2.0 ---
   if (showSplash) {
     return (
       <div style={{
@@ -45,27 +44,121 @@ export default function Home() {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: '#dc2626',
+        background: 'linear-gradient(135deg, #ff002b 0%, #b9001a 40%, #66000b 100%)',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        padding: '40px 20px',
         zIndex: 9999,
         color: '#ffffff',
-        fontFamily: 'Segoe UI, Roboto, sans-serif'
+        fontFamily: 'Segoe UI, Roboto, Helvetica, sans-serif',
+        boxSizing: 'border-box',
+        overflow: 'hidden'
       }}>
-        <div style={{ fontSize: '3.5rem', fontWeight: '900', letterSpacing: '-2px', marginBottom: '10px' }}>
-          MOKOLO<span style={{ color: '#1e293b' }}>.</span>
+        {/* TOP : Titres Giga Caractères */}
+        <div style={{ textAlign: 'center', marginTop: '2vh' }}>
+          <h1 style={{ 
+            fontSize: 'calc(3.5rem + 2vw)', 
+            fontWeight: '900', 
+            margin: 0, 
+            letterSpacing: '-3px', 
+            lineHeight: '1',
+            textShadow: '0 4px 15px rgba(0,0,0,0.2)'
+          }}>
+            MOKOLO
+          </h1>
+          <p style={{ 
+            fontSize: 'calc(1.2rem + 0.4vw)', 
+            fontWeight: '600', 
+            margin: '5px 0 0 0', 
+            letterSpacing: '6px', 
+            textTransform: 'uppercase', 
+            color: 'rgba(255, 255, 255, 0.8)'
+          }}>
+            Market
+          </p>
         </div>
-        <div style={{ fontSize: '1.1rem', fontWeight: '500', color: '#fca5a5', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '30px' }}>
-          Chargement du Marché...
+
+        {/* MIDDLE : Le Téléphone Noir Réaliste Haute Définition */}
+        <div style={{
+          width: '210px',
+          height: '420px',
+          backgroundColor: '#000000',
+          borderRadius: '36px',
+          border: '4px solid #1e1e1e',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 0 8px rgba(255,255,255,0.2)',
+          padding: '10px',
+          boxSizing: 'border-box',
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          {/* Dynamic Island / Caméra du téléphone */}
+          <div style={{
+            position: 'absolute',
+            top: '15px',
+            width: '60px',
+            height: '15px',
+            backgroundColor: '#000000',
+            borderRadius: '20px',
+            zIndex: 10
+          }}></div>
+
+          {/* Écran Interne du Smartphone */}
+          <div style={{
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(180deg, #111827 0%, #030712 100%)',
+            borderRadius: '26px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+            border: '1px solid rgba(255,255,255,0.05)',
+            boxShadow: 'inset 0 0 20px rgba(0,0,0,0.6)'
+          }}>
+            {/* Texte d'affichage Welcome */}
+            <h2 style={{
+              color: '#ffffff',
+              fontSize: '1.8rem',
+              fontWeight: '800',
+              margin: 0,
+              letterSpacing: '1px',
+              textAlign: 'center',
+              background: 'linear-gradient(45deg, #ffffff 0%, #fca5a5 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              animation: 'pulse 1.5s ease-in-out infinite'
+            }}>
+              Welcome
+            </h2>
+          </div>
         </div>
-        {/* Icône de sablier d'attente */}
-        <div style={{ fontSize: '2.5rem', animation: 'spin 2s linear infinite' }}>⏳</div>
+
+        {/* BOTTOM : Signature en Dégradé Blanc/Argent */}
+        <div style={{ marginBottom: '2vh', textAlign: 'center' }}>
+          <p style={{
+            margin: 0,
+            fontSize: '1.1rem',
+            fontWeight: '700',
+            letterSpacing: '3px',
+            textTransform: 'uppercase',
+            background: 'linear-gradient(180deg, #ffffff 0%, #94a3b8 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
+            MOKOLO MARKET
+          </p>
+        </div>
+
+        {/* Keyframes nécessaires pour l'animation du Welcome */}
         <style jsx global>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+          @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.06); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
           }
         `}</style>
       </div>
@@ -98,13 +191,11 @@ export default function Home() {
           MOKOLO<span style={{ color: '#1e293b' }}>.</span>
         </div>
         
-        {/* Barre de recherche adaptative */}
         <div style={{ display: 'flex', flexGrow: 1, minWidth: '280px', maxWidth: '500px' }}>
           <input type="text" placeholder="Rechercher produit, boutique..." style={{ width: '100%', padding: '10px 14px', border: '1px solid #cbd5e1', borderRadius: '8px 0 0 8px', outline: 'none', fontSize: '0.9rem' }} />
           <button style={{ backgroundColor: '#dc2626', color: '#fff', border: 'none', padding: '0 15px', borderRadius: '0 8px 8px 0', cursor: 'pointer', fontWeight: '600' }}>Aide</button>
         </div>
 
-        {/* Boutons d'action responsives */}
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
           <button style={{ padding: '8px 16px', backgroundColor: '#fef2f2', color: '#dc2626', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem' }}>
             Espace Vendeur
@@ -121,7 +212,7 @@ export default function Home() {
           <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: '#ffffff', padding: '5px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '600', textTransform: 'uppercase' }}>
             Réseau Omnicanal Multi-Boutiques
           </span>
-          <h1 style={{ fontSize: 'calc(1.8rem + 1.2vw)', fontWeight: '800', marginTop: '15px', marginBottom: '15px', lineHeight: '1.2' }}>
+          <h1 style={{ fontSize: 'calc(1.8rem + 1.2vw)', fontWeight: '800', marginTop: '15px', marginBoton: '15px', lineHeight: '1.2' }}>
             Votre Boutique Unique au Cœur du Grand Marché
           </h1>
           <p style={{ fontSize: 'calc(0.95rem + 0.1vw)', color: '#fca5a5', marginBottom: '25px', lineHeight: '1.5' }}>
@@ -130,13 +221,11 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 4. ZONE DE CONTENU PRINCIPALE (GRILLE RESPONSIVE SANS BUG) */}
+      {/* 4. ZONE DE CONTENU PRINCIPALE */}
       <main style={{ padding: '40px 4%' }}>
         {loading ? (
           <p style={{ textAlign: 'center', color: '#64748b', fontWeight: '500' }}>Vérification des collections Mokolo...</p>
         ) : products.length === 0 ? (
-          
-          /* Zone Vide : Message d'accueil Marchand connecté */
           <div style={{ textAlign: 'center', padding: '40px 20px', backgroundColor: '#ffffff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.02)', border: '1px solid #e2e8f0', maxWidth: '550px', margin: '0 auto' }}>
             <span style={{ fontSize: '3rem' }}>🏪</span>
             <h3 style={{ color: '#1e293b', margin: '15px 0 10px 0', fontSize: '1.4rem', fontWeight: '800' }}>
@@ -161,8 +250,6 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          
-          /* Grille d'articles s'adaptant magiquement aux téléphones, tablettes et PC */
           <div style={{ 
             display: 'grid', 
             gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', 
