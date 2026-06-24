@@ -334,3 +334,6 @@ export default function Home() {
   );
 }
 fix: correction typo style hero section
+git add src/app/page.tsx
+git commit -m "fix: changement de marginBoton en marginBottom"
+git push origin main
