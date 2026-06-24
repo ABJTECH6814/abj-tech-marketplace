@@ -333,3 +333,4 @@ export default function Home() {
     </div>
   );
 }
+fix: correction typo style hero section
