@@ -15,7 +15,7 @@ export default function Home() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
 
-  // Données de simulation propres et structurées (En attendant les vrais flux marchands sans faux produits)
+  // Données de simulation propres et structurées
   const produitsExemples = [
     { id: '1', nom: 'Chaussure Sneaker Sport', boutiqueNom: 'AbJ Tech Urban', categorie: 'Mode', prix: 25000, prixBarre: 35000, reduction: 30 },
     { id: '2', nom: 'Smartphone Pro Max', boutiqueNom: 'Mokolo Gadgets', categorie: 'Électronique', prix: 450000, prixBarre: 520000, reduction: 13 },
@@ -48,7 +48,6 @@ export default function Home() {
           ...doc.data()
         }));
         
-        // Si la base est vide, on affiche nos structures de test propres, sinon les vrais produits
         if (productsList.length > 0) {
           setProducts(productsList);
         } else {
@@ -56,7 +55,7 @@ export default function Home() {
         }
       } catch (error) {
         console.error("Erreur Firebase Mokolo:", error);
-        setProducts(produitsExemples); // Sécurité de dégradé
+        setProducts(produitsExemples);
       } finally {
         setLoading(false);
       }
@@ -211,6 +210,22 @@ export default function Home() {
         </div>
       </nav>
 
+      {/* HERO SECTION DE LA MARKETPLACE */}
+      <header style={{ background: 'linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%)', color: '#ffffff', padding: '60px 4%', textAlign: 'center' }}>
+        <div style={{ maxWidth: '750px', margin: '0 auto' }}>
+          <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: '#ffffff', padding: '5px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '600', textTransform: 'uppercase' }}>
+            Réseau Omnicanal Multi-Boutiques
+          </span>
+          {/* Ligne 215 corrigée ci-dessous : marginBottom à la place de marginBoton */}
+          <h1 style={{ fontSize: 'calc(1.8rem + 1.2vw)', fontWeight: '800', marginTop: '15px', marginBottom: '15px', lineHeight: '1.2' }}>
+            Votre Boutique Unique au Cœur du Grand Marché
+          </h1>
+          <p style={{ fontSize: 'calc(0.95rem + 0.1vw)', color: '#fca5a5', marginBottom: '25px', lineHeight: '1.5' }}>
+            Chaque vendeur possède son lien exclusif pour acquérir ses propres clients, tout en exposant automatiquement ses stocks sur la marketplace commune Mokolo.
+          </p>
+        </div>
+      </header>
+
       {/* ZONE DE CONTENU PRINCIPALE AVEC GRILLE ET DEFILEMENT INFINI */}
       <main style={{ padding: '25px 4%' }}>
         <h2 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '20px', color: '#1e293b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
@@ -221,47 +236,40 @@ export default function Home() {
           <p style={{ textAlign: 'center', color: '#64748b' }}>Vérification du marché...</p>
         ) : (
           <div>
-            {/* GRILLE DYNAMIQUE : CLASSE CSS DANS LE STYLE GLOBAL POUR LES 2 COLONNES MOBILES */}
             <div className="product-grid">
               {products.map((product) => (
                 <div key={product.id} style={{ 
                   backgroundColor: '#ffffff', 
-                  borderRadius: '16px', // Arrondis prononcés
+                  borderRadius: '16px', 
                   overflow: 'hidden', 
                   boxShadow: '0 4px 12px rgba(0,0,0,0.03)', 
-                  border: '2px solid #ef4444', // Arrondit / bordure de couleur rouge
+                  border: '2px solid #ef4444', 
                   display: 'flex', 
                   flexDirection: 'column',
                   position: 'relative'
                 }}>
-                  {/* Badge Boutique Nom */}
                   <span style={{ position: 'absolute', top: '8px', left: '8px', backgroundColor: '#000000', color: '#fff', padding: '3px 8px', borderRadius: '6px', fontSize: '0.65rem', fontWeight: '700', zIndex: 5 }}>
                     {product.boutiqueNom}
                   </span>
 
-                  {/* Zone Image */}
                   <div style={{ height: '140px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.8rem' }}>
                     [ Image ]
                   </div>
 
-                  {/* Contenu Fiche */}
                   <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                     <span style={{ fontSize: '0.65rem', color: '#dc2626', textTransform: 'uppercase', fontWeight: '800' }}>{product.categorie}</span>
                     <h3 style={{ fontSize: '0.9rem', fontWeight: '700', color: '#1e293b', margin: '4px 0 10px 0', lineHeight: '1.3', height: '2.4em', overflow: 'hidden' }}>{product.nom}</h3>
                     
-                    {/* Zone des Prix (Spécifications Neuromarketing) */}
                     <div style={{ marginBottom: '12px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                      {/* Prix Actuel Rouge Vif */}
                       <span style={{ fontSize: '1.2rem', fontWeight: '900', color: '#ff002b' }}>
                         {product.prix.toLocaleString()} FCFA
                       </span>
                       
-                      {/* Prix barré flouté dégradé rouge */}
                       {product.prixBarre && (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                           <span style={{ 
                             fontSize: '0.8rem', 
-                            color: 'rgba(220, 38, 38, 0.4)', // Rouge flou/atténué
+                            color: 'rgba(220, 38, 38, 0.4)', 
                             textDecoration: 'line-through',
                             fontWeight: '600'
                           }}>
@@ -274,7 +282,7 @@ export default function Home() {
                             padding: '1px 5px', 
                             borderRadius: '4px',
                             fontWeight: '700',
-                            filter: 'blur(0.2px)' // Effet léger flou dégradé
+                            filter: 'blur(0.2px)'
                           }}>
                             -{product.reduction}%
                           </span>
@@ -282,7 +290,6 @@ export default function Home() {
                       )}
                     </div>
 
-                    {/* Boutons d'Action Noirs Ciblés */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: 'auto' }}>
                       <button onClick={() => alert('Redirection vers le paiement sécurisé')} style={{ width: '100%', padding: '8px', backgroundColor: '#000000', color: '#ffffff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '0.8rem', cursor: 'pointer' }}>
                         Acheter
@@ -296,7 +303,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Indicateur pour le défilement infini */}
             <div style={{ textAlign: 'center', padding: '30px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: '600' }}>
               🔄 Chargement des produits Mokolo en continu...
             </div>
@@ -309,17 +315,16 @@ export default function Home() {
         <p style={{ margin: 0, fontSize: '0.8rem' }}>&copy; 2026 AbJ Tech Solutions. Tous droits réservés.</p>
       </footer>
 
-      {/* INJECTION DES CLASSES POUR RENDU DYNAMIQUE MOBILE ET DEFILEMENT */}
       <style jsx global>{`
         .product-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr); /* Strictement 2 produits verticaux sur téléphone */
+          grid-template-columns: repeat(2, 1fr);
           gap: 12px;
         }
 
         @media (min-width: 640px) {
           .product-grid {
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Dynamique sur tablette et PC */
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 20px;
           }
         }
