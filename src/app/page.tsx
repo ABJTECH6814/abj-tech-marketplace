@@ -307,3 +307,6 @@ export default function Home() {
     </div>
   );
 }
+git add .
+git commit -m "fix: nettoyage complet du build"
+git push origin main
