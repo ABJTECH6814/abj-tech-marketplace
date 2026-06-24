@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link'; // Importation indispensable pour la redirection
 import { db } from '../lib/firebase';
 import { collection, getDocs, limit, query } from 'firebase/firestore';
 
@@ -96,7 +97,7 @@ export default function Home() {
             {/* DROITE : Le Téléphone Noir Ajusté sur la hauteur du texte */}
             <div style={{
               width: '45px',
-              height: '80px', // Hauteur calibrée sur la hauteur du bloc texte
+              height: '80px', 
               backgroundColor: '#000000',
               borderRadius: '10px',
               border: '2px solid #1a1a1a',
@@ -149,10 +150,10 @@ export default function Home() {
           <div style={{
             width: '45px',
             height: '45px',
-            backgroundColor: '#dc2626', // Intérieur rouge vif
-            border: '4px solid #ffffff', // Bordure blanche
+            backgroundColor: '#dc2626', 
+            border: '4px solid #ffffff', 
             borderRadius: '50%',
-            borderTopColor: 'transparent', // Crée l'effet d'ouverture pour la rotation
+            borderTopColor: 'transparent', 
             animation: 'spin 1.2s linear infinite',
             boxShadow: '0 4px 10px rgba(0,0,0,0.15)'
           }}></div>
@@ -175,7 +176,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Animations CSS injectées proprement */}
+        {/* Animations CSS */}
         <style jsx global>{`
           @keyframes pulse {
             0% { opacity: 0.7; transform: scale(0.95); }
@@ -199,7 +200,7 @@ export default function Home() {
         📢 Espace Marchand : Créez votre vitrine unique, partagez votre lien et vendez sur la Marketplace !
       </div>
 
-      {/* 2. BARRE DE NAVIGATION MODIFIÉE ET NETTOYÉE */}
+      {/* 2. BARRE DE NAVIGATION MODIFIÉE ET RELIÉE À LA PAGE D'INSCRIPTION */}
       <nav style={{ 
         display: 'flex', 
         flexWrap: 'wrap',
@@ -214,14 +215,18 @@ export default function Home() {
         gap: '15px'
       }}>
         
-        {/* CÔTÉ GAUCHE : Menu et Connexion alignés ensemble */}
+        {/* CÔTÉ GAUCHE : Menu et Connexion alignés ensemble avec redirections */}
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <button style={{ padding: '10px 20px', backgroundColor: '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem' }}>
             Menu
           </button>
-          <button style={{ padding: '10px 20px', backgroundColor: '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem' }}>
-            Connexion
-          </button>
+          
+          {/* Lien vers la page d'inscription blanche */}
+          <Link href="/connexion" style={{ textDecoration: 'none' }}>
+            <button style={{ padding: '10px 20px', backgroundColor: '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem' }}>
+              Connexion
+            </button>
+          </Link>
         </div>
 
         {/* LOGO CENTRAL MOKOLO */}
@@ -229,7 +234,7 @@ export default function Home() {
           MOKOLO<span style={{ color: '#1e293b' }}>.</span>
         </div>
         
-        {/* BARRE DE RECHERCHE AVEC BOUTON FILTRE (SANS AIDE) */}
+        {/* BARRE DE RECHERCHE AVEC BOUTON FILTRE */}
         <div style={{ display: 'flex', flexGrow: 1, minWidth: '280px', maxWidth: '500px' }}>
           <input type="text" placeholder="Rechercher un produit sur tout le marché..." style={{ width: '100%', padding: '10px 14px', border: '1px solid #cbd5e1', borderRadius: '8px 0 0 8px', outline: 'none', fontSize: '0.9rem' }} />
           <button style={{ backgroundColor: '#dc2626', color: '#fff', border: 'none', padding: '0 20px', borderRadius: '0 8px 8px 0', cursor: 'pointer', fontWeight: '600' }}>Filtre</button>
@@ -272,12 +277,12 @@ export default function Home() {
               </p>
             </div>
 
-            <button 
-              onClick={() => alert("Étape Suivante : Configuration du Formulaire d'Inscription complet ! 🚀")}
-              style={{ width: '100%', padding: '12px 24px', backgroundColor: '#dc2626', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 12px rgba(220, 38, 38, 0.2)' }}
-            >
-              🚀 Ouvrir ma boutique & Obtenir mon Lien
-            </button>
+            {/* Redirection également sur le gros bouton d'action principal */}
+            <Link href="/connexion" style={{ textDecoration: 'none' }}>
+              <button style={{ width: '100%', padding: '12px 24px', backgroundColor: '#dc2626', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 12px rgba(220, 38, 38, 0.2)' }}>
+                🚀 Ouvrir ma boutique & Obtenir mon Lien
+              </button>
+            </Link>
           </div>
         ) : (
           <div style={{ 
@@ -309,7 +314,7 @@ export default function Home() {
         )}
       </main>
 
-      {/* 5. FOOTER MULTI-ÉCRANS */}
+      {/* 5. FOOTER */}
       <footer style={{ backgroundColor: '#1e293b', color: '#94a3b8', padding: '30px 20px', textAlign: 'center', borderTop: '1px solid #cbd5e1', marginTop: '40px' }}>
         <h3 style={{ color: '#ffffff', fontWeight: '800', margin: '0 0 5px 0', fontSize: '1.1rem' }}>MOKOLO MARKETPLACE</h3>
         <p style={{ margin: 0, fontSize: '0.8rem' }}>&copy; 2026 AbJ Tech Solutions. Tous droits réservés.</p>
