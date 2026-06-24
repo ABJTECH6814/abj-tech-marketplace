@@ -15,7 +15,7 @@ export default function Home() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
 
-  // Données de simulation propres et structurées
+  // Données de simulation
   const produitsExemples = [
     { id: '1', nom: 'Chaussure Sneaker Sport', boutiqueNom: 'AbJ Tech Urban', categorie: 'Mode', prix: 25000, prixBarre: 35000, reduction: 30 },
     { id: '2', nom: 'Smartphone Pro Max', boutiqueNom: 'Mokolo Gadgets', categorie: 'Électronique', prix: 450000, prixBarre: 520000, reduction: 13 },
@@ -216,7 +216,7 @@ export default function Home() {
           <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: '#ffffff', padding: '5px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '600', textTransform: 'uppercase' }}>
             Réseau Omnicanal Multi-Boutiques
           </span>
-          {/* Ligne 215 corrigée ci-dessous : marginBottom à la place de marginBoton */}
+          {/* Ligne 215 corrigée : marginBottom valide */}
           <h1 style={{ fontSize: 'calc(1.8rem + 1.2vw)', fontWeight: '800', marginTop: '15px', marginBottom: '15px', lineHeight: '1.2' }}>
             Votre Boutique Unique au Cœur du Grand Marché
           </h1>
@@ -226,7 +226,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ZONE DE CONTENU PRINCIPALE AVEC GRILLE ET DEFILEMENT INFINI */}
+      {/* ZONE DE CONTENU PRINCIPALE */}
       <main style={{ padding: '25px 4%' }}>
         <h2 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '20px', color: '#1e293b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
           🔥 Flux du Marché Central
