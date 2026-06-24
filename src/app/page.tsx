@@ -35,7 +35,7 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // --- SPLASH SCREEN IMMERSIF STYLE FACEBOOK / SEEDENCE 2.0 ---
+  // --- SPLASH SCREEN IMMERSIF PREMIUM (CONFORME AU CAHIER DES CHARGES) ---
   if (showSplash) {
     return (
       <div style={{
@@ -56,96 +56,118 @@ export default function Home() {
         boxSizing: 'border-box',
         overflow: 'hidden'
       }}>
-        {/* TOP : Titres Giga Caractères */}
-        <div style={{ textAlign: 'center', marginTop: '2vh' }}>
-          <h1 style={{ 
-            fontSize: 'calc(3.5rem + 2vw)', 
-            fontWeight: '900', 
-            margin: 0, 
-            letterSpacing: '-3px', 
-            lineHeight: '1',
-            textShadow: '0 4px 15px rgba(0,0,0,0.2)'
+        
+        {/* Espaceur du haut pour pousser le contenu vers le centre parfait */}
+        <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          
+          {/* ZONE CENTRALE : Textes et Téléphone alignés côte à côte */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            gap: '25px',
+            marginBottom: '40px'
           }}>
-            MOKOLO
-          </h1>
-          <p style={{ 
-            fontSize: 'calc(1.2rem + 0.4vw)', 
-            fontWeight: '600', 
-            margin: '5px 0 0 0', 
-            letterSpacing: '6px', 
-            textTransform: 'uppercase', 
-            color: 'rgba(255, 255, 255, 0.8)'
-          }}>
-            Market
-          </p>
-        </div>
+            
+            {/* GAUCHE : Bloc texte Mokolo Market */}
+            <div style={{ textAlign: 'left' }}>
+              <h1 style={{ 
+                fontSize: 'calc(2.5rem + 1.5vw)', 
+                fontWeight: '900', 
+                margin: 0, 
+                letterSpacing: '-2px', 
+                lineHeight: '0.9',
+                textShadow: '0 4px 15px rgba(0,0,0,0.2)'
+              }}>
+                MOKOLO
+              </h1>
+              <p style={{ 
+                fontSize: 'calc(1rem + 0.3vw)', 
+                fontWeight: '600', 
+                margin: '5px 0 0 0', 
+                letterSpacing: '4px', 
+                textTransform: 'uppercase', 
+                color: 'rgba(255, 255, 255, 0.85)'
+              }}>
+                Marketplace
+              </p>
+            </div>
 
-        {/* MIDDLE : Le Téléphone Noir Réaliste Haute Définition */}
-        <div style={{
-          width: '210px',
-          height: '420px',
-          backgroundColor: '#000000',
-          borderRadius: '36px',
-          border: '4px solid #1e1e1e',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 0 8px rgba(255,255,255,0.2)',
-          padding: '10px',
-          boxSizing: 'border-box',
-          position: 'relative',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          {/* Dynamic Island / Caméra du téléphone */}
+            {/* DROITE : Le Téléphone Noir Ajusté sur la hauteur du texte */}
+            <div style={{
+              width: '45px',
+              height: '80px', // Hauteur calibrée sur la hauteur du bloc texte
+              backgroundColor: '#000000',
+              borderRadius: '10px',
+              border: '2px solid #1a1a1a',
+              boxShadow: '0 8px 16px rgba(0, 0, 0, 0.4), inset 0 0 3px rgba(255,255,255,0.2)',
+              padding: '2px',
+              boxSizing: 'border-box',
+              position: 'relative',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              {/* Dynamic Island miniature */}
+              <div style={{
+                position: 'absolute',
+                top: '3px',
+                width: '14px',
+                height: '3px',
+                backgroundColor: '#000000',
+                borderRadius: '5px',
+                zIndex: 10
+              }}></div>
+
+              {/* Écran Interne Welcome */}
+              <div style={{
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(180deg, #111827 0%, #030712 100%)',
+                borderRadius: '7px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                overflow: 'hidden'
+              }}>
+                <span style={{
+                  color: '#ffffff',
+                  fontSize: '0.45rem',
+                  fontWeight: '800',
+                  letterSpacing: '0.2px',
+                  textTransform: 'uppercase',
+                  animation: 'pulse 1.5s ease-in-out infinite'
+                }}>
+                  Welcome
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* LOADER : Cercle rond rouge qui tourne avec bordure blanche */}
           <div style={{
-            position: 'absolute',
-            top: '15px',
-            width: '60px',
-            height: '15px',
-            backgroundColor: '#000000',
-            borderRadius: '20px',
-            zIndex: 10
+            width: '45px',
+            height: '45px',
+            backgroundColor: '#dc2626', // Intérieur rouge vif
+            border: '4px solid #ffffff', // Bordure blanche
+            borderRadius: '50%',
+            borderTopColor: 'transparent', // Crée l'effet d'ouverture pour la rotation
+            animation: 'spin 1.2s linear infinite',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.15)'
           }}></div>
 
-          {/* Écran Interne du Smartphone */}
-          <div style={{
-            width: '100%',
-            height: '100%',
-            background: 'linear-gradient(180deg, #111827 0%, #030712 100%)',
-            borderRadius: '26px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            overflow: 'hidden',
-            border: '1px solid rgba(255,255,255,0.05)',
-            boxShadow: 'inset 0 0 20px rgba(0,0,0,0.6)'
-          }}>
-            {/* Texte d'affichage Welcome */}
-            <h2 style={{
-              color: '#ffffff',
-              fontSize: '1.8rem',
-              fontWeight: '800',
-              margin: 0,
-              letterSpacing: '1px',
-              textAlign: 'center',
-              background: 'linear-gradient(45deg, #ffffff 0%, #fca5a5 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              animation: 'pulse 1.5s ease-in-out infinite'
-            }}>
-              Welcome
-            </h2>
-          </div>
         </div>
 
-        {/* BOTTOM : Signature en Dégradé Blanc/Argent */}
-        <div style={{ marginBottom: '2vh', textAlign: 'center' }}>
+        {/* BOTTOM : Signature Finale de l'Écran */}
+        <div style={{ marginBottom: '10px', textAlign: 'center' }}>
           <p style={{
             margin: 0,
             fontSize: '1.1rem',
             fontWeight: '700',
             letterSpacing: '3px',
             textTransform: 'uppercase',
-            background: 'linear-gradient(180deg, #ffffff 0%, #94a3b8 100%)',
+            background: 'linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
@@ -153,12 +175,16 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Keyframes nécessaires pour l'animation du Welcome */}
+        {/* Animations CSS injectées proprement */}
         <style jsx global>{`
           @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.06); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.9; }
+            0% { opacity: 0.7; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.7; transform: scale(0.95); }
+          }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
           }
         `}</style>
       </div>
@@ -173,7 +199,7 @@ export default function Home() {
         📢 Espace Marchand : Créez votre vitrine unique, partagez votre lien et vendez sur la Marketplace !
       </div>
 
-      {/* 2. BARRE DE NAVIGATION ULTRA-RESPONSIVE */}
+      {/* 2. BARRE DE NAVIGATION MODIFIÉE ET NETTOYÉE */}
       <nav style={{ 
         display: 'flex', 
         flexWrap: 'wrap',
@@ -187,22 +213,26 @@ export default function Home() {
         zIndex: 100,
         gap: '15px'
       }}>
+        
+        {/* CÔTÉ GAUCHE : Menu et Connexion alignés ensemble */}
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <button style={{ padding: '10px 20px', backgroundColor: '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem' }}>
+            Menu
+          </button>
+          <button style={{ padding: '10px 20px', backgroundColor: '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem' }}>
+            Connexion
+          </button>
+        </div>
+
+        {/* LOGO CENTRAL MOKOLO */}
         <div style={{ fontSize: '1.8rem', fontWeight: '900', color: '#dc2626', letterSpacing: '-1px' }}>
           MOKOLO<span style={{ color: '#1e293b' }}>.</span>
         </div>
         
+        {/* BARRE DE RECHERCHE AVEC BOUTON FILTRE (SANS AIDE) */}
         <div style={{ display: 'flex', flexGrow: 1, minWidth: '280px', maxWidth: '500px' }}>
-          <input type="text" placeholder="Rechercher produit, boutique..." style={{ width: '100%', padding: '10px 14px', border: '1px solid #cbd5e1', borderRadius: '8px 0 0 8px', outline: 'none', fontSize: '0.9rem' }} />
-          <button style={{ backgroundColor: '#dc2626', color: '#fff', border: 'none', padding: '0 15px', borderRadius: '0 8px 8px 0', cursor: 'pointer', fontWeight: '600' }}>Aide</button>
-        </div>
-
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          <button style={{ padding: '8px 16px', backgroundColor: '#fef2f2', color: '#dc2626', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem' }}>
-            Espace Vendeur
-          </button>
-          <button style={{ padding: '8px 16px', backgroundColor: '#1e293b', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.9rem' }}>
-            Connexion
-          </button>
+          <input type="text" placeholder="Rechercher un produit sur tout le marché..." style={{ width: '100%', padding: '10px 14px', border: '1px solid #cbd5e1', borderRadius: '8px 0 0 8px', outline: 'none', fontSize: '0.9rem' }} />
+          <button style={{ backgroundColor: '#dc2626', color: '#fff', border: 'none', padding: '0 20px', borderRadius: '0 8px 8px 0', cursor: 'pointer', fontWeight: '600' }}>Filtre</button>
         </div>
       </nav>
 
@@ -243,7 +273,7 @@ export default function Home() {
             </div>
 
             <button 
-              onClick={() => alert("Étape Suivante : Configuration de la création des fiches Boutiques individuelles ! 🚀")}
+              onClick={() => alert("Étape Suivante : Configuration du Formulaire d'Inscription complet ! 🚀")}
               style={{ width: '100%', padding: '12px 24px', backgroundColor: '#dc2626', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 12px rgba(220, 38, 38, 0.2)' }}
             >
               🚀 Ouvrir ma boutique & Obtenir mon Lien
