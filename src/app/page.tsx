@@ -1,119 +1,121 @@
-"use client";
+import React from "react";
 
-import React, { useState, useEffect } from 'react';
-import { SplashPage } from '@/components/ui/SplashPage';
-import { SidebarLeft } from '@/components/layout/SidebarLeft';
-import { AuthSection } from '@/components/auth/AuthSection';
-
-export default function RootPage() {
-  const [showSplash, setShowSplash] = useState(true);
-  const [countdown, setCountdown] = useState(5);
-  const [activeTab, setActiveTab] = useState<'feed' | 'analytics' | 'automation' | 'compta' | 'panier' | 'auth'>('feed');
-  const [userSession, setUserSession] = useState<{ uid: string; isSeller: boolean } | null>(null);
-
-  // Gestion rigoureuse du chronomètre (5 secondes)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCountdown((prev) => (prev > 1 ? prev - 1 : 1));
-    }, 1000);
-
-    const timeout = setTimeout(() => {
-      setShowSplash(false);
-    }, 5000);
-
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
-  }, []);
-
-  const handleAuthSuccess = (uid: string, isSeller: boolean) => {
-    setUserSession({ uid, isSeller });
-    setActiveTab('feed'); // Redirection sur le flux central après succès
-  };
-
-  const handleLogout = () => {
-    setUserSession(null);
-    setActiveTab('feed');
-  };
-
-  // 1️⃣ Affichage prioritaire de la Splash Page pendant 5s
-  if (showSplash) {
-    return <SplashPage countdown={countdown} />;
-  }
-
-  // 2️⃣ Fin des 5 secondes : Affichage de la Marketplace omnicanale
+export default function HomePage() {
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F9F9F9', color: '#1A1A1A' }}>
-      
-      {/* CONTROLE GAUCHE */}
-      <SidebarLeft 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
-        isSeller={userSession?.isSeller || false} 
-        onLogout={handleLogout} 
-      />
-
-      {/* ZONE CENTRALE D'AFFICHAGE DU SERVEUR CENTRAL */}
-      <main style={{ flexGrow: 1, padding: '40px', boxSizing: 'border-box', overflowY: 'auto', height: '100vh' }}>
-        
-        {activeTab === 'feed' && (
-          <div>
-            <div style={{ marginBottom: '30px', display: 'flex', gap: '15px' }}>
-              <input 
-                type="text" 
-                placeholder="Filtrer et rechercher sur le serveur central (Mokolo Market)..." 
-                style={{ flexGrow: 1, padding: '14px 18px', borderRadius: '8px', border: '1px solid #E5E5E5', outline: 'none', fontSize: '0.95rem' }} 
-              />
-              <select style={{ padding: '12px', borderRadius: '8px', border: '1px solid #E5E5E5', backgroundColor: '#FFFFFF', fontWeight: '600' }}>
-                <option>Tous les Catalogues</option>
-                <option>Téléphones & Électronique</option>
-                <option>Mode & Vêtements</option>
-              </select>
-            </div>
-
-            <div style={{ backgroundColor: '#FFFFFF', padding: '40px', borderRadius: '12px', border: '1px solid #E5E5E5', textAlign: 'center' }}>
-              <h3 style={{ margin: '0 0 10px 0', fontWeight: '800' }}>Flux Global de Marché</h3>
-              <p style={{ color: '#666666', margin: 0, fontSize: '0.9rem' }}>Les articles des bases de données de tous les vendeurs s'afficheront ici de manière synchronisée.</p>
-            </div>
+    <div className="flex min-h-screen bg-mokolo-gray-50 font-sans text-mokolo-black">
+      {/* Sidebar Gauche Intégrée (Évite le bug d'import externe) */}
+      <aside className="w-64 border-r border-mokolo-gray-200 bg-white p-6 hidden md:flex flex-col justify-between">
+        <div>
+          <div className="mb-8">
+            <h1 className="text-xl font-bold text-mokolo-red tracking-wider">MOKOLO</h1>
+            <p className="text-xs text-mokolo-gray-600">By AbJ Tech</p>
           </div>
-        )}
-
-        {activeTab === 'analytics' && <div style={{ padding: '20px' }}>📊 [Module de configuration des Pixels - Étape 4]</div>}
-        {activeTab === 'automation' && <div style={{ padding: '20px' }}>🤖 [Module de routage d'emails Resend API - Étape 4]</div>}
-        {activeTab === 'compta' && <div style={{ padding: '20px' }}>💰 [Module financiers et requêtes de retraits - Étape 4]</div>}
-        {activeTab === 'panier' && <div style={{ padding: '20px' }}>🛒 [Module panier commun et traçabilité Escrow - Étape 5]</div>}
-        {activeTab === 'auth' && (
-          <div style={{ maxWidth: '450px', margin: '0 auto' }}>
-            <AuthSection onAuthSuccess={handleAuthSuccess} />
-          </div>
-        )}
-      </main>
-
-      {/* CONTROLE DROIT : ESPACE CONNEXION/INSCRIPTION ACCESSIBLE PAR DÉFAUT */}
-      <aside style={{
-        width: '300px',
-        backgroundColor: '#FFFFFF',
-        borderLeft: '1px solid #E5E5E5',
-        padding: '25px 20px',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        height: '100vh',
-        position: 'sticky',
-        top: 0
-      }}>
-        {!userSession ? (
-          <AuthSection onAuthSuccess={handleAuthSuccess} />
-        ) : (
-          <div style={{ textAlign: 'center', padding: '20px', backgroundColor: '#FFF0F2', borderRadius: '8px', border: '1px solid #E5E5E5' }}>
-            <span style={{ fontSize: '0.8rem', color: '#666666', display: 'block', marginBottom: '4px' }}>Session active</span>
-            <strong style={{ fontSize: '0.95rem', color: '#A51C2B' }}>Utilisateur Connecté</strong>
-          </div>
-        )}
+          <nav className="space-y-2">
+            <a href="#" className="flex items-center space-x-3 px-4 py-2.5 rounded-lg bg-mokolo-gray-100 font-medium text-sm text-mokolo-black">
+              <span>🛒</span>
+              <span>Catalogue Global</span>
+            </a>
+            <a href="#" className="flex items-center space-x-3 px-4 py-2.5 rounded-lg font-medium text-sm text-mokolo-gray-600 hover:bg-mokolo-gray-50 transition-colors">
+              <span>📦</span>
+              <span>Mes Commandes</span>
+            </a>
+            <a href="#" className="flex items-center space-x-3 px-4 py-2.5 rounded-lg font-medium text-sm text-mokolo-gray-600 hover:bg-mokolo-gray-50 transition-colors">
+              <span>💼</span>
+              <span>Espace Vendeur</span>
+            </a>
+          </nav>
+        </div>
+        <div className="pt-4 border-t border-mokolo-gray-200 text-xs text-mokolo-gray-600">
+          Forfait Spark Actif
+        </div>
       </aside>
 
+      {/* Zone de Contenu Principal */}
+      <main className="flex-1 flex flex-col">
+        {/* Topbar / Header */}
+        <header className="h-16 border-b border-mokolo-gray-200 bg-white px-6 flex items-center justify-between sticky top-0 z-10">
+          <div className="flex items-center space-x-4 md:hidden">
+            <h1 className="text-lg font-bold text-mokolo-red">MOKOLO</h1>
+          </div>
+          <div className="w-full max-w-md hidden sm:block">
+            <div className="relative">
+              <input 
+                type="text" 
+                placeholder="Rechercher un produit, une marque, un grossiste..." 
+                className="w-full bg-mokolo-gray-100 text-sm px-4 py-2 rounded-lg border border-transparent focus:border-mokolo-gray-200 focus:bg-white outline-none transition-all"
+              />
+            </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            <button className="px-4 py-2 text-sm font-medium text-mokolo-gray-600 hover:text-mokolo-black transition-colors">
+              Connexion
+            </button>
+            <button className="px-4 py-2 text-sm font-medium bg-mokolo-red text-white rounded-lg shadow-sm hover:bg-opacity-90 transition-all">
+              S'inscrire
+            </button>
+          </div>
+        </header>
+
+        {/* Corps de la Page (Layout Asymétrique Inspiré Alibaba) */}
+        <div className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+          {/* Section Héro / Bannière */}
+          <div className="bg-mokolo-black text-white rounded-2xl p-8 relative overflow-hidden shadow-xl min-h-[240px] flex flex-col justify-center">
+            <div className="relative z-10 max-w-lg space-y-3">
+              <span className="text-xs font-semibold uppercase tracking-widest text-mokolo-red">Fret &amp; Séquestre Garanti</span>
+              <h2 className="text-3xl md:text-4xl font-black leading-tight">La première Marketplace B2B/B2C sécurisée au Cameroun</h2>
+              <p className="text-sm text-mokolo-gray-200">Achetez en gros ou au détail. Vos fonds restent bloqués tant que vous n'avez pas validé la livraison.</p>
+            </div>
+            <div className="absolute right-0 bottom-0 top-0 w-1/3 opacity-10 bg-gradient-to-l from-white to-transparent hidden lg:block" />
+          </div>
+
+          {/* Grille du Catalogue Centralisé */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold tracking-tight">Arrivages Récents &amp; Tendances</h3>
+              <span className="text-xs text-mokolo-red font-medium cursor-pointer hover:underline">Voir tout →</span>
+            </div>
+
+            {/* Grille Asymétrique des Produits */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((item) => (
+                <div key={item} className="bg-white rounded-xl border border-mokolo-gray-200 overflow-hidden hover:shadow-md transition-shadow group cursor-pointer">
+                  <div className="aspect-square bg-mokolo-gray-100 relative flex items-center justify-center text-3xl group-hover:scale-105 transition-transform duration-300">
+                    {item === 1 && "👟"}
+                    {item === 2 && "📱"}
+                    {item === 3 && "🎧"}
+                    {item === 4 && "🦷"}
+                  </div>
+                  <div className="p-4 space-y-2">
+                    <p className="text-xs text-mokolo-gray-600 uppercase font-semibold">Grossiste vérifié</p>
+                    <h4 className="font-medium text-sm line-clamp-1 group-hover:text-mokolo-red transition-colors">
+                      {item === 1 && "Chaussures de Sport Haute Performance"}
+                      {item === 2 && "Smartphone Next-Gen 128GB"}
+                      {item === 3 && "Écouteurs Sans Fil Réduction de Bruit"}
+                      {item === 4 && "Kit de Blanchiment Dentaire Professionnel"}
+                    </h4>
+                    
+                    {/* Structure Strict des 3 Paliers de Prix (Modèle Alibaba du Cahier des Charges) */}
+                    <div className="pt-2 border-t border-mokolo-gray-100 grid grid-cols-3 gap-1 text-center text-[10px]">
+                      <div className="bg-mokolo-gray-50 p-1 rounded">
+                        <span className="block font-bold text-mokolo-black">1 - 5 u</span>
+                        <span className="text-mokolo-gray-600">12 000 F</span>
+                      </div>
+                      <div className="bg-mokolo-gray-50 p-1 rounded">
+                        <span className="block font-bold text-mokolo-red">6 - 49 u</span>
+                        <span className="text-mokolo-red">10 500 F</span>
+                      </div>
+                      <div className="bg-mokolo-gray-50 p-1 rounded">
+                        <span className="block font-bold text-green-600">50+ u</span>
+                        <span className="text-green-600">8 500 F</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
   );
 }
