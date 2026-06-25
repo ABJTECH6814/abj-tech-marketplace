@@ -1,0 +1,92 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function getUserRole() {
+      return isSignedIn()
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role
+        : null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && getUserRole() == "ADMIN";
+    }
+
+    function isSeller(uid) {
+      return isSignedIn() && request.auth.uid == uid &&
+        get(/databases/$(database)/documents/users/$(uid)).data.isSeller == true;
+    }
+
+    // ---------- USERS ----------
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid) && request.resource.data.role == resource.data.role || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---------- SELLER PROFILES ----------
+    match /sellerProfiles/{uid} {
+      allow read: if true;
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---------- PRODUCTS ----------
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isSeller(request.resource.data.sellerId);
+      allow delete: if isAdmin();
+    }
+
+    // ---------- ORDERS ----------
+    match /orders/{orderId} {
+      allow read: if isSignedIn() && (resource.data.buyerId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn() && request.resource.data.buyerId == request.auth.uid;
+      allow update: if isAdmin();
+      allow delete: if false;
+    }
+
+    // ---------- ORDER ITEMS ----------
+    match /orderItems/{itemId} {
+      allow read: if isSignedIn() &&
+        (resource.data.sellerId == request.auth.uid ||
+         isAdmin() ||
+         get(/databases/$(database)/documents/orders/$(resource.data.orderId)).data.buyerId == request.auth.uid);
+      allow write: if isAdmin();
+    }
+
+    // ---------- PAYMENTS ----------
+    match /payments/{paymentId} {
+      allow read: if isAdmin() ||
+        (isSignedIn() &&
+         get(/databases/$(database)/documents/orders/$(resource.data.orderId)).data.buyerId == request.auth.uid);
+      allow write: if isAdmin();
+    }
+
+    // ---------- WITHDRAWALS ----------
+    match /withdrawals/{withdrawalId} {
+      allow read: if isSignedIn() && (resource.data.sellerId == request.auth.uid || isAdmin());
+      allow create: if isSeller(request.resource.data.sellerId);
+      allow update: if isAdmin();
+      allow delete: if false;
+    }
+
+    // ---------- REVIEWS ----------
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.resource.data.buyerId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+  }
+}
