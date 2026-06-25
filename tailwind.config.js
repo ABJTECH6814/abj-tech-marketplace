@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from "tailwindcss";
+
+const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,21 +9,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        mokolo: {
-          red: "#D72638",
-          black: "#0F0F0F",
-          gray: {
-            50: "#F8FAFC",
-            100: "#F1F5F9",
-            200: "#E2E8F0",
-            600: "#475569",
-          }
-        },
-      },
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        'mokolo-red': '#E11D48',
+        'mokolo-black': '#0F172A',
+        'mokolo-gray': {
+          50: '#F8FAFC',
+          100: '#F1F5F9',
+          200: '#E2E8F0',
+          600: '#475569'
+        }
       },
     },
   },
   plugins: [],
 };
+export default config;
