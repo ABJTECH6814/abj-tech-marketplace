@@ -9,8 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Source unique de vérité — doit matcher EXACTEMENT les hex utilisés
-        // en style inline dans AuthSection, ProductManager, OrderTracker, etc.
         "mokolo-red": "#D72638",
         "mokolo-red-dark": "#A51C2B",
         "mokolo-red-light": "#FFF0F2",
@@ -24,8 +22,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["Montserrat", "sans-serif"],
-        body: ["Inter", "sans-serif"],
+        // Reliées aux variables injectées par next/font dans layout.tsx
+        heading: ["var(--font-heading)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
       },
     },
   },
