@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
-import "./globals.css"; // ← CORRECTIF CRITIQUE : sans cet import, Tailwind compilé n'est jamais chargé
+import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "MOKOLO Market | Marketplace B2B & B2C sécurisée au Cameroun",
@@ -18,19 +19,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        {/* Préconnexion Firestore — conservé, sans impact sur le style */}
         <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
         <link
           rel="preconnect"
           href="https://firestore.googleapis.com"
           crossOrigin="anonymous"
         />
-
-        {/* ⚠️ SUPPRIMÉ : <script src="https://cdn.tailwindcss.com" defer> et le script
-            d'injection de config inline. Ils entraient en conflit avec le Tailwind
-            compilé par Next.js/PostCSS et masquaient le vrai bug (import manquant
-            de globals.css). Une seule source de Tailwind = celle compilée au build. */}
       </head>
       <body
         style={{
@@ -41,7 +35,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           minHeight: "100vh",
         }}
       >
-        {children}
+        {/* AuthProvider encapsule toute l'app : SidebarLeft, page d'accueil,
+            et plus tard /dashboard, /panier, /auth y auront tous accès via useAuth() */}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
