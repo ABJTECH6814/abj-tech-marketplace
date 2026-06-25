@@ -11,7 +11,7 @@ export default function ConnexionPage() {
     nom: '',
     prenom: '',
     email: '',
-    motDePass: '',
+    motDePass: '', // Note : Pense à ajouter le 'e' si tu relies à une API stricte
     pays: 'CM', // Cameroun par défaut
     telephone: '',
     nomBoutique: '',
@@ -29,7 +29,7 @@ export default function ConnexionPage() {
     "Informatique & Accessoires"
   ];
 
-  // Gestion des changements dans les inputs standard
+  // Gestion des changements dans les inputs standard et select
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
@@ -48,9 +48,9 @@ export default function ConnexionPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Ici sera connectée la logique Firebase Auth pour créer le vendeur
+    // Logique Firebase Auth à venir
     alert(`Inscription validée pour la boutique : ${formData.nomBoutique}`);
-    router.push('/'); // Redirection vers l'accueil après validation
+    router.push('/'); // Redirection vers l'accueil
   };
 
   return (
@@ -71,7 +71,7 @@ export default function ConnexionPage() {
         border: '2px solid #ffffff', // BORDURES BLANCHES
         borderRadius: '16px',
         padding: '30px',
-        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05)', // Ombre légère pour décoller du fond blanc
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05)',
         boxSizing: 'border-box'
       }}>
         
@@ -121,7 +121,7 @@ export default function ConnexionPage() {
               <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#475569', marginBottom: '6px' }}>Pays</label>
               <select name="pays" value={formData.pays} onChange={handleChange} 
                 style={{ width: '100%', padding: '11px 5px', backgroundColor: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.95rem', color: '#000000', outline: 'none', boxSizing: 'border-box' }}>
-                <option value="CM">🇨🇲 CM</option>
+                <option value="CM">🇲🇨 CM</option>
                 <option value="CI">🇨🇮 CI</option>
                 <option value="SN">🇸🇳 SN</option>
                 <option value="GA">🇬🇦 GA</option>
@@ -170,7 +170,7 @@ export default function ConnexionPage() {
             </div>
           </div>
 
-          {/* BAS DU FORMULAIRE : Actions alignées gauche / droite */}
+          {/* BAS DU FORMULAIRE : Actions alignées gauche / droite (CORRIGÉES) */}
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -178,16 +178,16 @@ export default function ConnexionPage() {
             marginTop: '15px',
             gap: '10px'
           }}>
-            {/* À Gauche : Lien Mot de passe oublié */}
-            <a href="#" style={{ fontSize: '0.85rem', color: '#dc2626', fontWeight: '600', textDecoration: 'none' }}>
-              Mot de passe oublié ?
+            {/* À Gauche : Lien pour basculer vers la connexion */}
+            <a href="#" style={{ fontSize: '0.85rem', color: '#475569', fontWeight: '600', textDecoration: 'none' }}>
+              Déjà inscrit ? Se connecter
             </a>
 
-            {/* À Droite : Bouton rouge dégradé avec écriture noire */}
+            {/* À Droite : Bouton d'action principale d'inscription */}
             <button type="submit" style={{
               padding: '12px 28px',
-              background: 'linear-gradient(135deg, #ff002b 0%, #b9001a 100%)', // Rouge dégradé
-              color: '#000000', // Écriture noire
+              background: 'linear-gradient(135deg, #ff002b 0%, #b9001a 100%)', 
+              color: '#ffffff', // Changement en blanc pour un meilleur contraste avec le rouge dégradé
               border: 'none',
               borderRadius: '8px',
               fontWeight: '750',
@@ -195,7 +195,7 @@ export default function ConnexionPage() {
               cursor: 'pointer',
               boxShadow: '0 4px 12px rgba(185, 0, 26, 0.2)'
             }}>
-              Se connecter
+              Créer ma boutique
             </button>
           </div>
 
