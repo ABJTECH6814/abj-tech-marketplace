@@ -1,7 +1,22 @@
 import React from "react";
 import type { Metadata } from "next";
+import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "MOKOLO Market | Marketplace B2B & B2C sécurisée au Cameroun",
@@ -15,7 +30,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="fr">
+    <html lang="fr" className={`${montserrat.variable} ${inter.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,6 +42,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body
+        className="font-body"
         style={{
           margin: 0,
           padding: 0,
@@ -35,8 +51,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           minHeight: "100vh",
         }}
       >
-        {/* AuthProvider encapsule toute l'app : SidebarLeft, page d'accueil,
-            et plus tard /dashboard, /panier, /auth y auront tous accès via useAuth() */}
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
