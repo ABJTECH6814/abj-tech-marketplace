@@ -496,7 +496,7 @@ export default function HomePage() {
   // Alert
   const [alert, setAlert]             = useState<{ type: "success"|"error"|"info"|"warning"; message: string } | null>(null);
 
-  const showAlert = useCallback((type: typeof alert extends null ? never : typeof alert["type"], message: string) => {
+  const showAlert = useCallback((type: "success"|"error"|"info"|"warning", message: string) => {
     setAlert({ type, message });
   }, []);
 
