@@ -1,3 +1,4 @@
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 "use client";
 
 export const dynamic = "force-dynamic";
