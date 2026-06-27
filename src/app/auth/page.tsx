@@ -1,227 +1,89 @@
 "use client";
 
-import React, { useState } from "react";
-import { auth, db } from "@/lib/firebase";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { AuthSection } from "@/components/auth/AuthSection";
 
-type AuthMode = "LOGIN" | "REGISTER_SELLER";
+export default function AuthPage() {
+  const router = useRouter();
 
-interface AuthSectionProps {
-  onAuthSuccess: (uid: string, isSeller: boolean) => void;
-  initialMode?: AuthMode;
-}
-
-export function AuthSection({ onAuthSuccess, initialMode = "LOGIN" }: AuthSectionProps) {
-  const [mode, setMode] = useState<AuthMode>(initialMode);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [shopName, setShopName] = useState("");
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      onAuthSuccess(userCredential.user.uid, false);
-    } catch {
-      setError("Identifiants invalides ou problème de connexion.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleRegisterSeller = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!firstName || !lastName || !phone || !shopName) {
-      setError("Veuillez remplir tous les champs requis pour créer votre boutique.");
-      return;
-    }
-    setLoading(true);
-    setError(null);
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const uid = userCredential.user.uid;
-
-      await setDoc(doc(db, "users", uid), {
-        email,
-        phone,
-        firstName,
-        lastName,
-        role: "SELLER",
-        isSeller: true,
-        isVerified: false,
-        kycStatus: "NONE",
-        createdAt: serverTimestamp(),
-      });
-
-      const shopSlug = shopName
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)+/g, "");
-
-      await setDoc(doc(db, "sellerProfiles", uid), {
-        shopName,
-        shopSlug,
-        description: `Bienvenue chez ${shopName}`,
-        logoUrl: "",
-        bannerUrl: "",
-        type: "B2C",
-        balance: 0,
-        totalEarned: 0,
-        customDomain: "",
-        automation: {
-          relanceEmails: [],
-        },
-        analytics: {
-          fbPixelId: "",
-          tiktokPixelId: "",
-          gtmId: "",
-        },
-        createdAt: serverTimestamp(),
-      });
-
-      setMessage("Votre espace vendeur a été initialisé avec succès !");
-      onAuthSuccess(uid, true);
-    } catch (err: unknown) {
-      const code = (err as { code?: string })?.code;
-      if (code === "auth/email-already-in-use") {
-        setError("Cette adresse email est déjà associée à un compte.");
-      } else {
-        setError("Erreur lors de la création du compte vendeur.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleForgotPassword = async () => {
-    if (!email) {
-      setError("Veuillez saisir votre adresse email dans le champ ci-dessus.");
-      return;
-    }
-    try {
-      await sendPasswordResetEmail(auth, email);
-      setMessage("Un email de réinitialisation de mot de passe vous a été envoyé.");
-      setError(null);
-    } catch {
-      setError("Impossible d'envoyer l'email de récupération.");
+  const handleAuthSuccess = (uid: string, isSeller: boolean) => {
+    if (isSeller) {
+      router.push("/dashboard");
+    } else {
+      router.push("/");
     }
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        backgroundColor: "#FFFFFF",
-        borderRadius: "12px",
-        border: "1px solid #E5E5E5",
-        padding: "24px",
-        boxSizing: "border-box",
-        fontFamily: "Inter, sans-serif",
-      }}
-    >
-      <div style={{ marginBottom: "20px", borderBottom: "1px solid #E5E5E5", paddingBottom: "12px" }}>
-        <h3 style={{ margin: "0 0 6px 0", fontSize: "1.1rem", fontWeight: 800, color: "#0F0F0F" }}>
-          {mode === "LOGIN" ? "Accès Client Rapide" : "Inscription Espace Vendeur"}
-        </h3>
-        <p style={{ fontSize: "0.78rem", color: "#666666", margin: 0, lineHeight: 1.4 }}>
-          {mode === "LOGIN"
-            ? "Connectez-vous pour suivre votre panier et valider vos commandes."
-            : "Créez votre boutique sur le serveur central de Mokolo Market."}
-        </p>
-      </div>
+    <>
+      <style>{`
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { background: #F9F9F9; font-family: var(--font-body,'Inter',sans-serif); }
+        .mm-auth-wrap { min-height: 100vh; display: flex; align-items: stretch; }
+        .mm-auth-left {
+          display: none; flex: 1;
+          background: linear-gradient(145deg, #0F0F0F 0%, #1a0205 60%, #2a0508 100%);
+          padding: 48px; flex-direction: column;
+          justify-content: center; position: relative; overflow: hidden;
+        }
+        @media(min-width: 900px) { .mm-auth-left { display: flex; } }
+        .mm-auth-right {
+          width: 100%; max-width: 480px; margin: 0 auto;
+          padding: 32px 20px 48px; display: flex;
+          flex-direction: column; justify-content: center; min-height: 100vh;
+        }
+        @keyframes mmFadeUp {
+          from { opacity:0; transform:translateY(12px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+      `}</style>
 
-      {error && (
-        <div style={{ color: "#D72638", backgroundColor: "#FFF0F2", border: "1px solid #D72638", padding: "10px", borderRadius: "6px", fontSize: "0.8rem", fontWeight: 600, marginBottom: "15px" }}>
-          {error}
-        </div>
-      )}
-      {message && (
-        <div style={{ color: "#00875A", backgroundColor: "#E2FCEF", border: "1px solid #00875A", padding: "10px", borderRadius: "6px", fontSize: "0.8rem", fontWeight: 600, marginBottom: "15px" }}>
-          {message}
-        </div>
-      )}
-
-      <form onSubmit={mode === "LOGIN" ? handleLogin : handleRegisterSeller} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-        {mode === "REGISTER_SELLER" && (
-          <div style={{ display: "flex", gap: "10px" }}>
-            <input type="text" placeholder="Nom" value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ width: "50%", padding: "10px", borderRadius: "6px", border: "1px solid #E5E5E5", fontSize: "0.85rem" }} />
-            <input type="text" placeholder="Prénom" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ width: "50%", padding: "10px", borderRadius: "6px", border: "1px solid #E5E5E5", fontSize: "0.85rem" }} />
+      <div className="mm-auth-wrap">
+        {/* Panneau gauche desktop */}
+        <div className="mm-auth-left">
+          <div style={{ position:"absolute", top:"-20%", right:"-10%", width:"60%", height:"140%", background:"radial-gradient(ellipse, rgba(215,38,56,0.25) 0%, transparent 65%)", pointerEvents:"none" }} />
+          <div style={{ position:"relative", zIndex:1 }}>
+            <div style={{ fontFamily:"var(--font-heading,'Montserrat',sans-serif)", fontWeight:900, fontSize:"2.8rem", color:"#FFFFFF", lineHeight:1, marginBottom:8 }}>
+              MOKOLO<br /><span style={{ color:"#D72638" }}>MARKET</span>
+            </div>
+            <p style={{ color:"rgba(255,255,255,0.50)", fontSize:"1rem", marginBottom:48, lineHeight:1.6 }}>
+              La marketplace africaine de confiance
+            </p>
+            {[
+              { icon:"🔒", title:"Paiement séquestré", desc:"Vos fonds sont sécurisés jusqu'à validation de la livraison" },
+              { icon:"📱", title:"MTN & Orange Money", desc:"Paiements mobile money intégrés pour le Cameroun" },
+              { icon:"🤝", title:"CRM IA intégré", desc:"Négociez directement avec les vendeurs via notre assistant IA" },
+              { icon:"🚀", title:"Livraison 48h", desc:"Réseau de livreurs partenaires dans tout le Cameroun" },
+            ].map((f, i) => (
+              <div key={i} style={{ display:"flex", gap:14, marginBottom:24, animation:`mmFadeUp 0.5s ${i*0.1}s ease both` }}>
+                <div style={{ width:42, height:42, borderRadius:12, background:"rgba(215,38,56,0.15)", border:"1px solid rgba(215,38,56,0.3)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"1.2rem", flexShrink:0 }}>{f.icon}</div>
+                <div>
+                  <p style={{ color:"#FFFFFF", fontWeight:700, fontSize:"0.9rem", marginBottom:3 }}>{f.title}</p>
+                  <p style={{ color:"rgba(255,255,255,0.42)", fontSize:"0.8rem", lineHeight:1.5 }}>{f.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        )}
+          <p style={{ position:"relative", zIndex:1, color:"rgba(255,255,255,0.22)", fontSize:"0.7rem", marginTop:"auto" }}>
+            © {new Date().getFullYear()} MOKOLO Market — ABJ Tech Agency · Yaoundé
+          </p>
+        </div>
 
-        {mode === "REGISTER_SELLER" && (
-          <input type="tel" placeholder="Numéro de Téléphone (Ex: 6XXXXXXXX)" value={phone} onChange={(e) => setPhone(e.target.value)} style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #E5E5E5", fontSize: "0.85rem", boxSizing: "border-box" }} />
-        )}
-
-        {mode === "REGISTER_SELLER" && (
-          <input type="text" placeholder="Nom de votre Boutique / Entreprise" value={shopName} onChange={(e) => setShopName(e.target.value)} style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #E5E5E5", fontSize: "0.85rem", boxSizing: "border-box" }} />
-        )}
-
-        <input type="email" placeholder="Adresse Email officielle" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #E5E5E5", fontSize: "0.85rem", boxSizing: "border-box" }} />
-        <input type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #E5E5E5", fontSize: "0.85rem", boxSizing: "border-box" }} />
-
-        {mode === "LOGIN" && (
-          <button type="button" onClick={handleForgotPassword} style={{ background: "none", border: "none", color: "#666666", fontSize: "0.75rem", textAlign: "right", fontWeight: 600, cursor: "pointer", padding: 0 }}>
-            Mot de passe oublié ?
-          </button>
-        )}
-
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: "100%",
-            backgroundColor: loading ? "#666666" : "#0F0F0F",
-            color: "#FFFFFF",
-            border: "none",
-            padding: "12px",
-            borderRadius: "6px",
-            fontWeight: 700,
-            fontSize: "0.85rem",
-            cursor: loading ? "not-allowed" : "pointer",
-          }}
-        >
-          {loading ? "Traitement en cours..." : mode === "LOGIN" ? "Se Connecter" : "Finaliser mon Inscription Vendeur"}
-        </button>
-      </form>
-
-      <div style={{ marginTop: "20px", paddingTop: "15px", borderTop: "1px solid #E5E5E5", textAlign: "center" }}>
-        {mode === "LOGIN" ? (
-          <div>
-            <span style={{ fontSize: "0.8rem", color: "#666666" }}>Vous souhaitez vendre sur la plateforme ?</span>
-            <button
-              type="button"
-              onClick={() => { setMode("REGISTER_SELLER"); setError(null); setMessage(null); }}
-              style={{ display: "block", width: "100%", marginTop: "8px", backgroundColor: "#D72638", color: "#FFFFFF", border: "none", padding: "10px", borderRadius: "6px", fontWeight: 700, fontSize: "0.8rem", cursor: "pointer" }}
-            >
-              Créer un Compte Vendeur
-            </button>
+        {/* Panneau droit — formulaire */}
+        <div className="mm-auth-right">
+          <div style={{ textAlign:"center", marginBottom:32 }}>
+            <a href="/" style={{ textDecoration:"none" }}>
+              <div style={{ fontFamily:"var(--font-heading,'Montserrat',sans-serif)", fontWeight:900, fontSize:"1.7rem", color:"#0F0F0F" }}>
+                MOKOLO <span style={{ color:"#D72638" }}>MARKET</span>
+              </div>
+            </a>
+            <p style={{ fontSize:"0.78rem", color:"#666666", marginTop:5 }}>
+              La marketplace africaine de confiance
+            </p>
           </div>
-        ) : (
-          <button
-            type="button"
-            onClick={() => { setMode("LOGIN"); setError(null); setMessage(null); }}
-            style={{ background: "none", border: "none", color: "#0F0F0F", fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", textDecoration: "underline" }}
-          >
-            Retourner à la connexion client simple
-          </button>
-        )}
+          <AuthSection onAuthSuccess={handleAuthSuccess} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
