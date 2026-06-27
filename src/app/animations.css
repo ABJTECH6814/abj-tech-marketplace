@@ -1,0 +1,419 @@
+/* ═══════════════════════════════════════════
+   MOKOLO MARKET — ANIMATIONS PROFESSIONNELLES
+   Fichier : src/app/animations.css
+   Import dans globals.css : @import './animations.css';
+═══════════════════════════════════════════ */
+
+/* ─── KEYFRAMES ─── */
+@keyframes mmFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mmFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes mmSlideLeft {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes mmSlideRight {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes mmScaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes mmBounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { opacity: 1; transform: scale(1.05); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+@keyframes mmPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+@keyframes mmShimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes mmRipple {
+  0%   { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(4); opacity: 0; }
+}
+@keyframes mmBounce {
+  0%, 100% { transform: translateY(0); }
+  40%       { transform: translateY(-8px); }
+  60%       { transform: translateY(-4px); }
+}
+@keyframes mmWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%       { transform: rotate(-8deg); }
+  75%       { transform: rotate(8deg); }
+}
+@keyframes mmGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(215,38,56,0.3); }
+  50%       { box-shadow: 0 0 24px rgba(215,38,56,0.7); }
+}
+@keyframes mmFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+@keyframes mmSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes mmSlideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mmStaggerFade {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── CLASSES UTILITAIRES ─── */
+
+/* Apparition au chargement */
+.mm-anim-fade-up    { animation: mmFadeUp    0.5s cubic-bezier(0.34,1.2,0.64,1) both; }
+.mm-anim-fade-in    { animation: mmFadeIn    0.4s ease both; }
+.mm-anim-scale-in   { animation: mmScaleIn   0.4s cubic-bezier(0.34,1.2,0.64,1) both; }
+.mm-anim-slide-left { animation: mmSlideLeft 0.4s cubic-bezier(0.34,1.2,0.64,1) both; }
+.mm-anim-bounce-in  { animation: mmBounceIn  0.6s cubic-bezier(0.34,1.56,0.64,1) both; }
+.mm-anim-slide-down { animation: mmSlideDown 0.35s cubic-bezier(0.34,1.2,0.64,1) both; }
+
+/* Délais en cascade (stagger) */
+.mm-delay-1  { animation-delay: 0.05s; }
+.mm-delay-2  { animation-delay: 0.10s; }
+.mm-delay-3  { animation-delay: 0.15s; }
+.mm-delay-4  { animation-delay: 0.20s; }
+.mm-delay-5  { animation-delay: 0.25s; }
+.mm-delay-6  { animation-delay: 0.30s; }
+.mm-delay-7  { animation-delay: 0.35s; }
+.mm-delay-8  { animation-delay: 0.40s; }
+
+/* Animations en boucle */
+.mm-anim-float  { animation: mmFloat  3s ease-in-out infinite; }
+.mm-anim-pulse  { animation: mmPulse  2s ease-in-out infinite; }
+.mm-anim-glow   { animation: mmGlow   2s ease-in-out infinite; }
+.mm-anim-bounce { animation: mmBounce 1s ease-in-out infinite; }
+.mm-anim-spin   { animation: mmSpin   1s linear infinite; }
+
+/* ─── BOUTONS ─── */
+
+/* Bouton principal rouge */
+.mm-btn-red {
+  position: relative;
+  overflow: hidden;
+  background: #D72638;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(215,38,56,0.30);
+}
+.mm-btn-red:hover {
+  background: #A51C2B;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(215,38,56,0.40);
+}
+.mm-btn-red:active {
+  transform: scale(0.96) translateY(0);
+  box-shadow: 0 2px 8px rgba(215,38,56,0.20);
+}
+/* Shimmer au hover */
+.mm-btn-red::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transition: left 0.4s ease;
+}
+.mm-btn-red:hover::before { left: 150%; }
+
+/* Bouton noir (négociation) */
+.mm-btn-black {
+  position: relative;
+  overflow: hidden;
+  background: #0F0F0F;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.20);
+}
+.mm-btn-black:hover {
+  background: #1A1A1A;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.30);
+}
+.mm-btn-black:active { transform: scale(0.96); }
+.mm-btn-black::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);
+  transition: left 0.4s ease;
+}
+.mm-btn-black:hover::before { left: 150%; }
+
+/* Bouton vert (gros) */
+.mm-btn-green {
+  position: relative;
+  overflow: hidden;
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(22,163,74,0.25);
+}
+.mm-btn-green:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(22,163,74,0.35);
+}
+.mm-btn-green:active { transform: scale(0.96); }
+.mm-btn-green::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.20), transparent);
+  transition: left 0.4s ease;
+}
+.mm-btn-green:hover::before { left: 150%; }
+
+/* Ripple effect générique */
+.mm-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.mm-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 10px; height: 10px;
+  background: rgba(255,255,255,0.35);
+  border-radius: 50%;
+  transform: scale(0) translate(-50%, -50%);
+  transform-origin: top left;
+}
+.mm-ripple:active::after {
+  animation: mmRipple 0.5s ease-out;
+}
+
+/* ─── CARTES PRODUITS ─── */
+.mm-card {
+  transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1),
+              box-shadow 0.25s ease;
+  will-change: transform;
+}
+.mm-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
+}
+.mm-card:active {
+  transform: scale(0.98);
+}
+/* Image zoom au hover */
+.mm-card .mm-card-img {
+  overflow: hidden;
+}
+.mm-card .mm-card-img img {
+  transition: transform 0.4s ease;
+}
+.mm-card:hover .mm-card-img img {
+  transform: scale(1.07);
+}
+
+/* ─── BANNIÈRES ─── */
+.mm-banner {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+.mm-banner:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18) !important;
+}
+.mm-banner:hover img {
+  transform: scale(1.04);
+  transition: transform 0.4s ease;
+}
+
+/* ─── BOTTOM NAV ─── */
+.mm-nav-item {
+  transition: color 0.2s;
+}
+.mm-nav-item.active .mm-nav-icon {
+  animation: mmBounce 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.mm-nav-item:hover .mm-nav-icon {
+  animation: mmWiggle 0.4s ease;
+}
+
+/* ─── CHIPS CATÉGORIES ─── */
+.mm-chip {
+  transition: all 0.2s cubic-bezier(0.34,1.2,0.64,1);
+}
+.mm-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+.mm-chip:active {
+  transform: scale(0.94);
+}
+.mm-chip.active {
+  animation: mmScaleIn 0.25s cubic-bezier(0.34,1.4,0.64,1) both;
+}
+
+/* ─── ALERTES ─── */
+.mm-alert {
+  animation: mmSlideDown 0.35s cubic-bezier(0.34,1.2,0.64,1) both;
+}
+.mm-alert-exit {
+  animation: mmFadeIn 0.25s ease reverse both;
+}
+
+/* ─── MODALS / BOTTOM SHEETS ─── */
+.mm-modal-overlay {
+  animation: mmFadeIn 0.25s ease both;
+}
+.mm-modal-sheet {
+  animation: mmSlideUp 0.38s cubic-bezier(0.34,1.15,0.64,1) both;
+}
+@keyframes mmSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ─── SKELETON LOADER ─── */
+.mm-skeleton {
+  background: linear-gradient(
+    90deg,
+    #F3F4F6 25%,
+    #E5E5E5 50%,
+    #F3F4F6 75%
+  );
+  background-size: 200% 100%;
+  animation: mmShimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* ─── BOUTIQUES ─── */
+.mm-shop-card {
+  transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1),
+              box-shadow 0.25s ease,
+              border-color 0.2s;
+}
+.mm-shop-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10) !important;
+  border-color: #D72638 !important;
+}
+
+/* ─── SCROLL REVEAL ─── */
+/* Appliqué via IntersectionObserver dans le JS */
+.mm-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.2,0.64,1);
+}
+.mm-reveal.mm-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── CARROUSEL INFINI ─── */
+.mm-carousel-track {
+  animation: mmCarouselSlide 40s linear infinite;
+}
+.mm-carousel-track:hover {
+  animation-play-state: paused;
+}
+@keyframes mmCarouselSlide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── ICÔNES HEADER ─── */
+.mm-icon-btn {
+  transition: transform 0.2s cubic-bezier(0.34,1.4,0.64,1),
+              background 0.2s;
+  border-radius: 50%;
+}
+.mm-icon-btn:hover {
+  transform: scale(1.15);
+  background: rgba(215,38,56,0.08);
+}
+.mm-icon-btn:active {
+  transform: scale(0.9);
+}
+
+/* ─── BADGE NOTIFICATION ─── */
+.mm-badge-dot {
+  animation: mmBounceIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+/* ─── INPUT FOCUS ─── */
+.mm-input-anim {
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.mm-input-anim:focus {
+  border-color: #D72638 !important;
+  box-shadow: 0 0 0 3px rgba(215,38,56,0.12);
+  transform: scale(1.01);
+  outline: none;
+}
+
+/* ─── IMAGES PRODUIT ─── */
+.mm-product-img {
+  transition: transform 0.4s cubic-bezier(0.34,1.1,0.64,1);
+}
+.mm-product-img:hover {
+  transform: scale(1.06);
+}
+
+/* ─── PRIX TAG ─── */
+.mm-price-tag {
+  transition: all 0.2s ease;
+}
+.mm-price-tag:hover {
+  letter-spacing: 0.02em;
+}
+
+/* ─── CTA SECTION ─── */
+.mm-cta-section {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.mm-cta-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(215,38,56,0.18) !important;
+}
+
+/* ─── LOGO ANIMATION ─── */
+.mm-logo-anim {
+  transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1);
+}
+.mm-logo-anim:hover {
+  transform: scale(1.04);
+}
+
+/* ─── RÉDUCTION MOUVEMENT (accessibilité) ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
