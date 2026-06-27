@@ -414,8 +414,6 @@ function DomainTab({ onSave }: { onSave: () => void }) {
   );
 }
 
-const SHOP_SLUG = "ma-boutique";
-
 /* ══════════════════════════════════════════════
    ONGLET 4 — LIENS PRODUITS
 ══════════════════════════════════════════════ */
