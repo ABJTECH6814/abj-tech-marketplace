@@ -603,7 +603,7 @@ export default function HomePage() {
           <div className="max-w-[1400px] mx-auto">
 
             {/* Catégories */}
-            <div className="mm-reveal opacity-0 translate-y-5 transition-all duration-500 bg-white border-b border-mokolo-gray-200 px-4 py-3">
+            <div ">className="mm-reveal transition-all duration-500 bg-white
               <div className="mm-hscroll flex gap-2 overflow-x-auto">
                 {CATEGORIES.map((c) => {
                   const isActive = activeCategory === c.label;
@@ -624,7 +624,7 @@ export default function HomePage() {
 
             {/* Boutiques sponsorisées */}
             {sponsored.length > 0 && (
-              <section className="mm-reveal opacity-0 translate-y-5 transition-all duration-500 bg-white px-4 pt-4 pb-3 mt-2">
+              <section ">className="mm-reveal transition-all duration-500 bg-white
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <div className="w-6.5 h-6.5 rounded-lg bg-mokolo-black flex items-center justify-center text-sm">⭐</div>
@@ -662,7 +662,7 @@ export default function HomePage() {
 
             {/* Bannières horizontales */}
             {banners.length > 0 && (
-              <section className="mm-reveal opacity-0 translate-y-5 transition-all duration-500 pt-3.5 pb-2.5 pl-4 mt-2">
+              <section ">className="mm-reveal transition-all duration-500 bg-white
                 <div className="mm-hscroll flex gap-3 overflow-x-auto">
                   {banners.map((b) => (
                     <a key={b.id} href={b.linkUrl} target="_blank" rel="noopener noreferrer" className="mm-banner shrink-0 w-[clamp(240px,70vw,320px)] h-[110px] rounded-2xl overflow-hidden relative block bg-gradient-to-br from-mokolo-black to-mokolo-red-dark">
@@ -682,7 +682,7 @@ export default function HomePage() {
 
             {/* Carrousel infini */}
             {products.length > 0 && (
-              <section className="mm-reveal opacity-0 translate-y-5 transition-all duration-500 pt-4 overflow-hidden">
+              <section ">className="mm-reveal transition-all duration-500
                 <div className="flex items-center justify-between px-4 mb-3">
                   <span className="font-heading font-black text-[0.95rem]">🔥 {lang === "fr" ? "Arrivages récents" : "Recent arrivals"}</span>
                   <span className="text-[0.7rem] text-mokolo-gray-600">↔ En continu</span>
@@ -708,7 +708,7 @@ export default function HomePage() {
 
             {/* Reels */}
             {videos.length > 0 && (
-              <section className="mm-reveal opacity-0 translate-y-5 transition-all duration-500 pt-4 pl-4 mt-2">
+              <section className="mm-reveal opacity-0 translate-y-5 transition-all duration-500">
                 <div className="flex items-center justify-between pr-4 mb-3">
                   <span className="font-heading font-black text-[0.95rem]">🎬 {lang === "fr" ? "Reels & Vidéos" : "Reels & Videos"}</span>
                   <Link href="/reels" className="text-[0.72rem] font-semibold text-mokolo-red">{lang === "fr" ? "Voir tout →" : "See all →"}</Link>
@@ -755,7 +755,7 @@ export default function HomePage() {
 
             {/* Boutiques populaires */}
             {sellers.length > 0 && (
-              <section className="mm-reveal opacity-0 translate-y-5 transition-all duration-500 px-4 pt-5">
+              <section className="mm-reveal transition-all duration-500">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <span className="font-heading font-black text-[0.95rem]">🏪 {lang === "fr" ? "Boutiques Populaires" : "Popular Shops"}</span>
